@@ -8,51 +8,119 @@
 
 import UIKit
 
-class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FiltersViewControllerDelegate{
+class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FiltersViewControllerDelegate, UISearchBarDelegate, UIScrollViewDelegate{
 
     @IBOutlet weak var tableView: UITableView!
+   
     var businesses: [Business]!
+    var filteredBusinesses = [Business]()
+    lazy var searchBar: UISearchBar = UISearchBar(frame: CGRectMake(0, 0, 200, 20))
+    var isMoreDataLoading = false
+    var offset: Int = 0
+    var limit: Int = 20
+    var filteredCategories = [String]()
+    var loadingMoreView:InfiniteScrollActivityView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
+        searchBar.delegate = self
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120
-        Business.searchWithTerm("Thai", completion: { (businesses: [Business]!, error: NSError!) -> Void in
-            self.businesses = businesses
-            self.tableView.reloadData()
-            for business in businesses {
-//                print(business.name!)
-//                print(business.address!)
-            }
-        })
+        searchBar.placeholder = "Enter something you like"
+        var leftNavBarButton = UIBarButtonItem(customView:searchBar)
+        self.navigationItem.leftBarButtonItem = leftNavBarButton
+        let frame = CGRectMake(0, tableView.contentSize.height, tableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight)
+        loadingMoreView = InfiniteScrollActivityView(frame: frame)
+        loadingMoreView!.hidden = true
+        tableView.addSubview(loadingMoreView!)
         
-
-/* Example of Yelp search with more search options specified
-        Business.searchWithTerm("Restaurants", sort: .Distance, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
+        var insets = tableView.contentInset;
+        insets.bottom += InfiniteScrollActivityView.defaultHeight;
+        tableView.contentInset = insets
+        
+        Business.searchWithTerm("Restaurant", completion: { (businesses: [Business]!, error: NSError!) -> Void in
             self.businesses = businesses
-            
-            for business in businesses {
-                print(business.name!)
-                print(business.address!)
-            }
-        }
-*/
+            self.filteredBusinesses = businesses
+            self.offset += businesses.count
+            self.tableView.reloadData()
+      })
+        
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let businesses = businesses{
-                return businesses.count
-        }else{
-            return 0
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        // Handle scroll behavior here
+        if (!isMoreDataLoading) {
+            
+            let scrollViewContentHeight = tableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.dragging) {
+                isMoreDataLoading = true
+                let frame = CGRectMake(0, tableView.contentSize.height, tableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight)
+                loadingMoreView?.frame = frame
+                loadingMoreView!.startAnimating()
+                loadMoreData()
+                
+            }
+            
         }
+        
+    }
+    
+    func loadMoreData(){
+        Business.searchWithTerm("Restaurants", offset: self.offset, limit: self.limit, sort: nil, categories: filteredCategories, deals: nil){ (businesses: [Business]!, error: NSError!) -> Void in
+            self.filteredBusinesses += businesses
+            self.offset += businesses.count
+            self.isMoreDataLoading = false
+            self.loadingMoreView!.stopAnimating()
+            self.tableView.reloadData()
+        }
+    
+    }
+    
+
+    
+
+    
+    @IBAction func onTap(sender: AnyObject) {
+        self.searchBar.endEditing(true)
+    }
+    
+    // This method updates filteredData based on the text in the Search Box
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        // When there is no text, filteredData is the same as the original data
+        if searchText.isEmpty {
+            filteredBusinesses = businesses
+        } else {
+            // The user has entered text into the search box
+            // Use the filter method to iterate over all items in the data array
+            // For each item, return true if the item should be included and false if the
+            // item should NOT be included
+            filteredBusinesses = businesses.filter({(dataItem: Business) -> Bool in
+                // If dataItem matches the searchText, return true to include it
+                var title = dataItem.name! as String
+                if title.rangeOfString(searchText) != nil {
+                    return true
+                } else {
+                    return false
+                }
+            })
+            
+        }
+        self.tableView.reloadData()
+    }
+    
+    
+
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return filteredBusinesses.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
-            let cell = tableView.dequeueReusableCellWithIdentifier("BusinessCell", forIndexPath: indexPath) as! BusinessCell
-            cell.business = businesses[indexPath.row]
-        
+        let cell = tableView.dequeueReusableCellWithIdentifier("BusinessCell", forIndexPath: indexPath) as! BusinessCell
+        cell.business = filteredBusinesses[indexPath.row]
         return cell
     }
     
@@ -76,13 +144,15 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func filtersViewController(filtersViewController: FiltersViewController, didUpdateFilters filters: [String : AnyObject]) {
-        var categories = filters["categories"] as? [String]
-        Business.searchWithTerm("Restaurants", sort: nil, categories: categories, deals: nil){ (businesses: [Business]!, error: NSError!) -> Void in
-            self.businesses = businesses
+        if let filteredCategories = filters["categories"] as? [String]{
+            self.filteredCategories = filteredCategories
+            Business.searchWithTerm("Restaurants",  sort: nil, categories: filteredCategories, deals: nil){ (businesses: [Business]!, error: NSError!) -> Void in
+            self.filteredBusinesses = businesses
             self.tableView.reloadData()
             }
+            }
         }
-        
+    
         
     }
     

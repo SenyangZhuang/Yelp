@@ -19,14 +19,12 @@ class Business: NSObject {
     
     init(dictionary: NSDictionary) {
         name = dictionary["name"] as? String
-
         let imageURLString = dictionary["image_url"] as? String
         if imageURLString != nil {
             imageURL = NSURL(string: imageURLString!)!
         } else {
             imageURL = nil
         }
-        
         let location = dictionary["location"] as? NSDictionary
         var address = ""
         if location != nil {
@@ -44,7 +42,6 @@ class Business: NSObject {
             }
         }
         self.address = address
-        
         let categoriesArray = dictionary["categories"] as? [[String]]
         if categoriesArray != nil {
             var categoryNames = [String]()
@@ -56,7 +53,6 @@ class Business: NSObject {
         } else {
             categories = nil
         }
-        
         let distanceMeters = dictionary["distance"] as? NSNumber
         if distanceMeters != nil {
             let milesPerMeter = 0.000621371
@@ -64,14 +60,12 @@ class Business: NSObject {
         } else {
             distance = nil
         }
-        
         let ratingImageURLString = dictionary["rating_img_url_large"] as? String
         if ratingImageURLString != nil {
             ratingImageURL = NSURL(string: ratingImageURLString!)
         } else {
             ratingImageURL = nil
         }
-        
         reviewCount = dictionary["review_count"] as? NSNumber
     }
     
@@ -91,4 +85,10 @@ class Business: NSObject {
     class func searchWithTerm(term: String, sort: YelpSortMode?, categories: [String]?, deals: Bool?, completion: ([Business]!, NSError!) -> Void) -> Void {
         YelpClient.sharedInstance.searchWithTerm(term, sort: sort, categories: categories, deals: deals, completion: completion)
     }
+    
+    class func searchWithTerm(term: String, offset: Int?, limit: Int?, sort: YelpSortMode?, categories: [String]?, deals: Bool?, completion: ([Business]!, NSError!) -> Void) -> Void {
+        YelpClient.sharedInstance.searchWithTerm(term, offset: offset, limit: limit, sort: sort, categories: categories, deals: deals, completion: completion)
+    }
+    
+    
 }

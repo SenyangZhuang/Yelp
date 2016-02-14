@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <scenes>
-        <!--Yelp-->
+        <!--Businesses View Controller-->
         <scene sceneID="5L9-Uz-lNK">
             <objects>
                 <viewController id="2xI-yr-O5N" customClass="BusinessesViewController" customModule="Yelp" customModuleProvider="target" sceneMemberID="viewController">
@@ -102,6 +102,7 @@
                                                 <constraint firstItem="2Pa-eY-fKh" firstAttribute="top" secondItem="knI-jD-Lvr" secondAttribute="top" constant="8" id="sgo-Pn-oRe"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <gestureRecognizers/>
                                         <connections>
                                             <outlet property="addressLabel" destination="U8u-QA-fc0" id="4ts-qA-Jyr"/>
                                             <outlet property="categoriesLabel" destination="km3-Mb-3WY" id="m2P-Mp-Rte"/>
@@ -116,15 +117,19 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="yv9-Sn-aaw" firstAttribute="top" secondItem="XhR-oz-92f" secondAttribute="top" id="K8M-GN-wjf"/>
                             <constraint firstAttribute="trailing" secondItem="yv9-Sn-aaw" secondAttribute="trailing" id="R3N-R2-zKr"/>
                             <constraint firstItem="VBY-gq-v8E" firstAttribute="top" secondItem="yv9-Sn-aaw" secondAttribute="bottom" id="bAo-ST-mCj"/>
                             <constraint firstItem="yv9-Sn-aaw" firstAttribute="leading" secondItem="XhR-oz-92f" secondAttribute="leading" id="iUs-CJ-JmY"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="M43-9f-SAs" appends="YES" id="GgK-gN-8qL"/>
+                        </connections>
                     </view>
-                    <navigationItem key="navigationItem" title="Yelp" id="dSb-EF-WJF">
-                        <barButtonItem key="leftBarButtonItem" title="Filters" id="Y8Q-Xi-fDn">
+                    <navigationItem key="navigationItem" id="dSb-EF-WJF">
+                        <barButtonItem key="rightBarButtonItem" title="Filters" id="Y8Q-Xi-fDn">
                             <connections>
                                 <segue destination="Np9-U0-811" kind="modal" id="ecX-Wh-Ydk"/>
                             </connections>
@@ -135,6 +140,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fgb-4b-F1b" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="M43-9f-SAs">
+                    <connections>
+                        <action selector="onTap:" destination="2xI-yr-O5N" id="CTr-8a-zD5"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1419" y="225"/>
         </scene>
