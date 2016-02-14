@@ -34,7 +34,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     
     func goToLocation(location: CLLocation) {
-        let span = MKCoordinateSpanMake(0.05, 0.05)
+        let span = MKCoordinateSpanMake(0.03, 0.03)
         let region = MKCoordinateRegionMake(location.coordinate, span)
         mapView.setRegion(region, animated: false)
     }

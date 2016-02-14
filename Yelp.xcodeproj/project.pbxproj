@@ -18,6 +18,7 @@
 		3B07465D1C69897E0047BEA7 /* BusinessCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B07465C1C69897E0047BEA7 /* BusinessCell.swift */; };
 		3B4EFE041C703990006EEDA6 /* InfiniteScrollActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4EFE031C703990006EEDA6 /* InfiniteScrollActivityView.swift */; };
 		3B4EFE061C70429F006EEDA6 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4EFE051C70429F006EEDA6 /* MapViewController.swift */; };
+		3B4EFE081C705FCB006EEDA6 /* detailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B4EFE071C705FCB006EEDA6 /* detailViewController.swift */; };
 		3BF3573A1C6BFB26003159B6 /* SwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF357391C6BFB26003159B6 /* SwitchCell.swift */; };
 		3BF3573E1C6BFE72003159B6 /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF3573D1C6BFE72003159B6 /* FiltersViewController.swift */; };
 		90B718C590BD546DEFEF0D61 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3C5CF4FD317D72ABE2AAC4 /* Pods.framework */; };
@@ -49,6 +50,7 @@
 		3B07465C1C69897E0047BEA7 /* BusinessCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessCell.swift; sourceTree = "<group>"; };
 		3B4EFE031C703990006EEDA6 /* InfiniteScrollActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfiniteScrollActivityView.swift; sourceTree = "<group>"; };
 		3B4EFE051C70429F006EEDA6 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		3B4EFE071C705FCB006EEDA6 /* detailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = detailViewController.swift; sourceTree = "<group>"; };
 		3BF357391C6BFB26003159B6 /* SwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchCell.swift; sourceTree = "<group>"; };
 		3BF3573D1C6BFE72003159B6 /* FiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
 		97D8B2E3FFD1AF4F4A707E47 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				22AAAA9B1AEA1EC300A544AF /* BusinessesViewController.swift */,
 				3BF3573D1C6BFE72003159B6 /* FiltersViewController.swift */,
 				3B4EFE051C70429F006EEDA6 /* MapViewController.swift */,
+				3B4EFE071C705FCB006EEDA6 /* detailViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 				3B4EFE041C703990006EEDA6 /* InfiniteScrollActivityView.swift in Sources */,
 				3B07465D1C69897E0047BEA7 /* BusinessCell.swift in Sources */,
 				22AAAA9C1AEA1EC300A544AF /* BusinessesViewController.swift in Sources */,
+				3B4EFE081C705FCB006EEDA6 /* detailViewController.swift in Sources */,
 				3BF3573E1C6BFE72003159B6 /* FiltersViewController.swift in Sources */,
 				3B4EFE061C70429F006EEDA6 /* MapViewController.swift in Sources */,
 				22AAAA991AEA0A9700A544AF /* Business.swift in Sources */,

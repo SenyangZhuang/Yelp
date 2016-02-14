@@ -28,6 +28,11 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         tableView.dataSource = self
         tableView.delegate = self
         searchBar?.delegate = self
+        let tapGestureView1 = UITapGestureRecognizer(target: self, action: "tapOneAct:")
+        let tapGestureView2 = UITapGestureRecognizer(target: self, action: "tapOneAct:")
+        //add gesture into both Views.
+        self.tableView.addGestureRecognizer(tapGestureView1)
+        self.tableView.addGestureRecognizer(tapGestureView2)
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120
         searchBar?.placeholder = "Enter something you like"
@@ -49,6 +54,17 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
             self.tableView.reloadData()
       })
         
+    }
+    
+    func tapOneAct(sender: UITapGestureRecognizer) {
+        if(sender.view!.restorationIdentifier == "BusinessTableView") // view1 is `Restoration ID` of 1st view
+        {
+            self.searchBar?.endEditing(true)
+        }
+        if(sender.view!.restorationIdentifier == "BusinessCell")// view2 is `Restoration ID` of 2nd view
+        {
+            print("View2 is tapped!")
+        }
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -85,9 +101,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     
 
     
-    @IBAction func onTap(sender: AnyObject) {
-        self.searchBar?.endEditing(true)
-    }
+
     
     // This method updates filteredData based on the text in the Search Box
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
