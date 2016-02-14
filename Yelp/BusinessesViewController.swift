@@ -14,7 +14,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
    
     var businesses: [Business]!
     var filteredBusinesses = [Business]()
-    lazy var searchBar: UISearchBar = UISearchBar(frame: CGRectMake(0, 0, 200, 20))
+    var searchBar: UISearchBar?
     var isMoreDataLoading = false
     var offset: Int = 0
     var limit: Int = 20
@@ -23,14 +23,16 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchBar = UISearchBar()
+        searchBar?.sizeToFit()
         tableView.dataSource = self
         tableView.delegate = self
-        searchBar.delegate = self
+        searchBar?.delegate = self
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120
-        searchBar.placeholder = "Enter something you like"
-        var leftNavBarButton = UIBarButtonItem(customView:searchBar)
-        self.navigationItem.leftBarButtonItem = leftNavBarButton
+        searchBar?.placeholder = "Enter something you like"
+//        let leftNavBarButton = UIBarButtonItem(customView:(searchBar?)!)
+        self.navigationItem.titleView = searchBar
         let frame = CGRectMake(0, tableView.contentSize.height, tableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight)
         loadingMoreView = InfiniteScrollActivityView(frame: frame)
         loadingMoreView!.hidden = true
@@ -84,7 +86,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
 
     
     @IBAction func onTap(sender: AnyObject) {
-        self.searchBar.endEditing(true)
+        self.searchBar?.endEditing(true)
     }
     
     // This method updates filteredData based on the text in the Search Box
@@ -136,9 +138,16 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        let navigationController = segue.destinationViewController as! UINavigationController
-        let filtersViewController = navigationController.topViewController as! FiltersViewController
-        filtersViewController.delegate = self
+        if segue.identifier == "FilterControllerSegue" {
+            let navigationController = segue.destinationViewController as! UINavigationController
+            let filtersViewController = navigationController.topViewController as! FiltersViewController
+            filtersViewController.delegate = self
+        }else if segue.identifier == "MapControllerSegue"{
+            let navigationController = segue.destinationViewController as! UINavigationController
+            let mapViewController = navigationController.topViewController as! MapViewController
+            mapViewController.businesses = self.filteredBusinesses
+            
+        }
         
         
     }
@@ -147,7 +156,12 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         if let filteredCategories = filters["categories"] as? [String]{
             self.filteredCategories = filteredCategories
             Business.searchWithTerm("Restaurants",  sort: nil, categories: filteredCategories, deals: nil){ (businesses: [Business]!, error: NSError!) -> Void in
-            self.filteredBusinesses = businesses
+                if businesses != nil{
+                    self.filteredBusinesses = businesses
+                }
+                else{
+                    self.filteredBusinesses = []
+                }
             self.tableView.reloadData()
             }
             }

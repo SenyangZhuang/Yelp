@@ -129,9 +129,14 @@
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" id="dSb-EF-WJF">
-                        <barButtonItem key="rightBarButtonItem" title="Filters" id="Y8Q-Xi-fDn">
+                        <barButtonItem key="leftBarButtonItem" title="Filters" id="Y8Q-Xi-fDn">
                             <connections>
-                                <segue destination="Np9-U0-811" kind="modal" id="ecX-Wh-Ydk"/>
+                                <segue destination="Np9-U0-811" kind="modal" identifier="FilterControllerSegue" id="ecX-Wh-Ydk"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Map" id="3Y5-cj-Htn">
+                            <connections>
+                                <segue destination="mNX-eK-Tx8" kind="modal" identifier="MapControllerSegue" id="GM3-tC-bxl"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -146,7 +151,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1419" y="225"/>
+            <point key="canvasLocation" x="1755" y="40"/>
         </scene>
         <!--Filters-->
         <scene sceneID="hxZ-wR-xeD">
@@ -222,7 +227,40 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aLH-Ch-6OF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2202" y="225"/>
+            <point key="canvasLocation" x="1558" y="544"/>
+        </scene>
+        <!--Map View Controller-->
+        <scene sceneID="b5V-5g-nWK">
+            <objects>
+                <viewController id="yB1-ZT-GDO" customClass="MapViewController" customModule="Yelp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7X4-oI-5XE"/>
+                        <viewControllerLayoutGuide type="bottom" id="d1q-cu-auh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uKv-EC-EnQ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="VRW-B8-hrD">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="8kY-m4-kXp">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="LgW-Fh-YJx">
+                            <connections>
+                                <action selector="backButtonClicked:" destination="yB1-ZT-GDO" id="qn4-R0-Ylp"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="VRW-B8-hrD" id="PFg-gu-6dD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AIy-jb-U5o" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2495" y="67"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="nTD-ER-N23">
@@ -240,7 +278,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RpH-eh-5Ds" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1027" y="225"/>
+            <point key="canvasLocation" x="982" y="225"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="CNs-Xg-FdQ">
@@ -259,7 +297,25 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IQX-CD-Avf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1808" y="225"/>
+            <point key="canvasLocation" x="1590" y="175"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="VVp-BJ-YCw">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="mNX-eK-Tx8" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="VWM-SC-4Qx">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="yB1-ZT-GDO" kind="relationship" relationship="rootViewController" id="TuK-tm-UNK"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oJ7-go-Khl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2134" y="84"/>
         </scene>
     </scenes>
 </document>
